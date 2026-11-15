@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { createRenderer } from "./webgl";
 
 /**
  * Black hole — top-down (face-on) view, rendered in one fragment shader.
@@ -205,7 +206,8 @@ export default function BlackHoleCanvas({ className = "" }: { className?: string
     if (!host) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, premultipliedAlpha: true });
+    const renderer = createRenderer({ antialias: false, alpha: true, premultipliedAlpha: true });
+    if (!renderer) return;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setClearColor(0x000000, 0);
     host.appendChild(renderer.domElement);

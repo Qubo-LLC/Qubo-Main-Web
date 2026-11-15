@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { createRenderer } from "./webgl";
 
 /**
  * Interactive Quantum Topology Mesh.
@@ -186,7 +187,8 @@ export default function QuantumMeshCanvas({ className = "" }: { className?: stri
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ── Renderer ──────────────────────────────────────────────
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    const renderer = createRenderer({ antialias: true, alpha: true });
+    if (!renderer) return;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0); // fully transparent: no gray box
     host.appendChild(renderer.domElement);
